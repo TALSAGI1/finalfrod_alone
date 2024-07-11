@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def image = docker.build('your_dockerhub_username/your_image_name')
+                    def image = docker.build('https://github.com/TALSAGI1/finalfrod_alone')
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') {
                         image.push("${env.BUILD_NUMBER}")
                         image.push('latest')
