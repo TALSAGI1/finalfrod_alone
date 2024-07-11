@@ -1,16 +1,21 @@
 pipeline {
     agent any
 
+    environment {
+        GIT_CREDENTIALS = credentials('github-pat') 
+        DOCKER_CREDENTIALS = credentials('docker-credentials-id') 
+    }
+
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/YOUR_GITHUB_USERNAME/finalfrod_alone.git'
+                git url: 'https://github.com/TALSAGI1/finalfrod_alone.git', credentialsId: 'github-pat', branch: 'main'
             }
         }
         stage('Build') {
             steps {
                 script {
-                    def image = docker.build('https://github.com/TALSAGI1/finalfrod_alone')
+                    def image = docker.build('talsa/tal_ex2_exam')
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') {
                         image.push("${env.BUILD_NUMBER}")
                         image.push('latest')
