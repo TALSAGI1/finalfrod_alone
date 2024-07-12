@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     def image = docker.build('talsa/tal_ex2_exam')
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials-id') {
                         image.push("${env.BUILD_NUMBER}")
                         image.push('latest')
                     }
