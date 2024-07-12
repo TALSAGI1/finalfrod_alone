@@ -5,8 +5,13 @@ pipeline {
         GIT_CREDENTIALS = credentials('github-pat') 
         DOCKER_CREDENTIALS = credentials('docker-credentials-id') 
     }
-
+    
     stages {
+        stage('Check Docker') {
+            steps {
+                sh 'docker --version'
+            }
+        }
         stage('Clone') {
             steps {
                 git url: 'https://github.com/TALSAGI1/finalfrod_alone.git', credentialsId: 'github-pat', branch: 'main'
