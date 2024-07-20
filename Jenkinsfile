@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Check Docker') {
             steps {
-                bat 'docker --version'  // Use 'bat' for Windows command
+                bat 'docker --version'  
             }
         }
         stage('Clone') {
