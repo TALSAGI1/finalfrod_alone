@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GIT_CREDENTIALS = credentials('github-pat') 
-        DOCKER_CREDENTIALS = credentials('docker-credentials-id') 
+        DOCKER_CREDENTIALS = credentials('docker-hub-credentials') 
     }
     
     stages {
