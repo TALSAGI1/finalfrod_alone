@@ -16,11 +16,15 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Build, tag, and push image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: tal_ex2_exam  # השם של ה-ECR שלך
+        ECR_REPOSITORY: tal_ex2_exam
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -28,9 +32,9 @@ jobs:
 
     - name: Deploy to ECS
       env:
-        AWS_REGION: eu-west-3  # האזור של פריז
-        ECS_CLUSTER: ecs-talsa-finalprod  # השם של ה-ECS Cluster שלך
-        ECS_SERVICE: talsa-service-finalprod  # השם של ה-ECS Service שלך
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        ECS_CLUSTER: ecs-talsa-finalprod
+        ECS_SERVICE: talsa-service-finalprod
         IMAGE_URI: ${{ steps.login-ecr.outputs.registry }}/tal_ex2_exam:${{ github.sha }}
       run: |
         aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --force-new-deployment --region $AWS_REGION --image $IMAGE_URI
