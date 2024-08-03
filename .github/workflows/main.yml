@@ -37,6 +37,6 @@ jobs:
         AWS_REGION: ${{ secrets.AWS_REGION }}
         ECS_CLUSTER: ecs-talsa-finalprod
         ECS_SERVICE: talsa-service-finalprod
-        IMAGE_URI: ${{ steps.login-ecr.outputs.registry }}tal_ex2_exam:${{ github.sha }}
+        IMAGE_URI: ${{ steps.login-ecr.outputs.registry }}/tal_ex2_exam:${{ github.sha }}
       run: |
         aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --force-new-deployment --region $AWS_REGION --image $IMAGE_URI
