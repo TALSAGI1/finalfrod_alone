@@ -2,14 +2,14 @@ version: 0.0
 os: linux 
 hooks:
   AfterInstall:
-    - location: scripts/install_dependencies.sh
+    - location: SCRIPTS/install_dependencies.sh
       timeout: 1500
       runas: root
   ApplicationStart:
-    - location: scripts/start_container.sh
+    - location: SCRIPTS/start_container.sh
       timeout: 50000
       runas: root
   ApplicationStop:
-    - location: scripts/stop_container.sh
+    - location: SCRIPTS/stop_container.sh
       timeout: 20000
       runas: root
